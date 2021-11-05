@@ -14,10 +14,10 @@ class Trie
 		class Node
 		{
 			public:
-				Node*   children[26];
+				Node*   children[27];
 				Node(char c) : c(c), endOfWord(false)
 				{
-					for(int i = 0; i < 26; i++)
+					for(int i = 0; i < 27; i++)
 						children[i] = nullptr;
 				}
 				char  	c;
@@ -27,7 +27,7 @@ class Trie
 				{
 					bool flag = false;
 
-					for(int i = 0; i < 26; i++)
+					for(int i = 0; i < 27; i++)
 					{
 						if(children[i] != nullptr)
 						{
@@ -51,7 +51,7 @@ class Trie
 		{
 			if(currentNode)
 			{
-				for(int i = 0; i < 26; i++)
+				for(int i = 0; i < 27; i++)
 					destruct(currentNode->children[i]);
 				delete currentNode;
 			}
@@ -63,7 +63,11 @@ class Trie
 
 			for(int i = 0; i < key.size(); i++)
 			{
+
 				int index = key[i] - 97;
+                if (key[i] == '?')
+                    index = 27 - 1;
+
 				if(it->children[index] == nullptr)
 					it->children[index] = new Node(key[i]);
 				it = it->children[index];
@@ -109,7 +113,8 @@ class Trie
 
 		void visit(Node* it, std::string word)
 		{
-			for(int i = 0; i < 26; i++)
+			for(int i = 0; i < 27
+            ; i++)
 			{
 				if(it->children[i] != nullptr)
 				{
