@@ -51,9 +51,6 @@ public:
                 std::cout << this->patterns[v] <<'\n';
                 v =  outputLink[v] ? outputLink[v] : nullptr;
             }
-
-
-
         }
 
     }
@@ -130,7 +127,6 @@ private:
                 suffixLink[crrChild] = root;
                 queue.push(crrChild);
             }
-
 
         /*** go through the queue. the queue doesn't contain nullptr ***/
         while (!queue.empty())
