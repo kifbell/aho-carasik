@@ -3,11 +3,11 @@
 
 void test1()
 {
-	std::vector<std::string> patterns = { "i", "in", "tin", "sting" };
+	std::vector<std::string> patterns = { "i", "in", "tin", "sting", "st?ng", "st?", "t?", "?" };
 
 	AhoCorasickTrie myTrie(patterns);
 
-	myTrie.find("sting");
+	myTrie.find("stong");
 }
 
 void test2()

@@ -23,7 +23,7 @@ public:
         printSuffixLinks();
     }
 
-    void find(const std::string& text)
+    void find(const std::string &text)
     {
         Node *currentNode = _root;
         for (int i = 0; i < text.size(); i++)
@@ -33,7 +33,7 @@ public:
             while ((!aOfX(currentNode, a)) and currentNode != _root)
                 currentNode = suffixLink[currentNode];
 
-            if ((!aOfX(currentNode, a)) and currentNode == _root )
+            if ((!aOfX(currentNode, a)) and currentNode == _root)
                 continue;
 
             currentNode = aOfX(currentNode, a);
@@ -41,15 +41,15 @@ public:
                 // We have found a pattern in position ??? of the text! Print position and pattern
             {
                 std::cout << i + 1 - this->patterns[currentNode].size() << ": ";
-                std::cout << this->patterns[currentNode] <<'\n';
+                std::cout << this->patterns[currentNode] << '\n';
             }
-            Node* v =  outputLink[currentNode] ? outputLink[currentNode] : nullptr;
+            Node *v = outputLink[currentNode] ? outputLink[currentNode] : nullptr;
             while (v)
-            // We have a found a pattern in position ??? of the text! Print position and pattern
+                // We have a found a pattern in position ??? of the text! Print position and pattern
             {
                 std::cout << i + 1 - this->patterns[v].size() << ": ";
-                std::cout << this->patterns[v] <<'\n';
-                v =  outputLink[v] ? outputLink[v] : nullptr;
+                std::cout << this->patterns[v] << '\n';
+                v = outputLink[v] ? outputLink[v] : nullptr;
             }
         }
 
@@ -103,11 +103,13 @@ private:
 
     Node *aOfX(Node *x, char a)
     {
+
         if (!x)
             return nullptr;
         for (Node *child: x->children)
             if (child)
-                if (child->c == a)
+                if ((child->c == a) or (child->c == '?'))
+//                if (child->c == a)
                     return child;
         return nullptr;
     }
