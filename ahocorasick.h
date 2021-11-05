@@ -6,17 +6,32 @@
 #include <map>
 #include <queue>
 #include <iostream>
+#include <valarray>
 
 class AhoCorasickTrie : public Trie
 {
 public:
 
-    AhoCorasickTrie(std::vector<std::string> patterns)
+    AhoCorasickTrie(const std::vector<std::string> &patterns)
     {
-        for (int i = 0; i < patterns.size(); i++)
+        std::vector<std::string> realPatterns = patterns;
+
+        for (auto &pattern: patterns)
         {
-            Node *endNode = this->insert(patterns[i]);
-            this->patterns[endNode] = patterns[i];
+            int qmAt = pattern.rfind('?');
+            if (qmAt)
+            {
+                for (auto to = pattern.begin(); to !=qmAt; to++){
+                    std::string newPattern = pattern.substr(0, to) + '?';
+                    realPatterns.push_back(newPattern);
+            }}
+        }
+
+
+        for (auto &pattern: patterns)
+        {
+            Node *endNode = this->insert(pattern);
+            this->patterns[endNode] = pattern;
         }
 
         buildSuffixLinks();
@@ -40,15 +55,21 @@ public:
             if (currentNode->endOfWord)
                 // We have found a pattern in position ??? of the text! Print position and pattern
             {
-                std::cout << i + 1 - this->patterns[currentNode].size() << ": ";
-                std::cout << this->patterns[currentNode] << '\n';
+                int foundAt = i + 1 - this->patterns[currentNode].size();
+                int pattLen = this->patterns[currentNode].size();
+
+                std::cout << "match object " << text.substr(foundAt, pattLen)
+                          << "\vfound at position " << foundAt << '\n';
             }
             Node *v = outputLink[currentNode] ? outputLink[currentNode] : nullptr;
             while (v)
                 // We have a found a pattern in position ??? of the text! Print position and pattern
             {
-                std::cout << i + 1 - this->patterns[v].size() << ": ";
-                std::cout << this->patterns[v] << '\n';
+                int foundAt = i + 1 - this->patterns[v].size();
+                int pattLen = this->patterns[v].size();
+
+                std::cout << "match object " << text.substr(foundAt, pattLen)
+                          << " found at position " << foundAt << '\n';
                 v = outputLink[v] ? outputLink[v] : nullptr;
             }
         }
@@ -161,6 +182,7 @@ private:
     }
 
     std::map<Node *, std::string> patterns;
+    std::vector<std::string> realPatterns;
 
     std::map<Node *, Node *> suffixLink;
 
