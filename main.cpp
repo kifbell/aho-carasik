@@ -3,7 +3,7 @@
 
 void test1()
 {
-	std::vector<std::string> patterns = { "i", "in", "tin", "sting", "st?ng", "st?", "t?", "?" };
+	std::vector<std::string> patterns = { "i", "in", "tin", "sting", "st?ng"};
 
 	AhoCorasickTrie myTrie(patterns);
 

@@ -18,10 +18,10 @@ public:
 
         for (auto &pattern: patterns)
         {
-            int qmAt = pattern.rfind('?');
-            if (qmAt)
+            int qmAt = pattern.rfind("?");
+            if (qmAt >= 0)
             {
-                for (auto to = pattern.begin(); to !=qmAt; to++){
+                for (int to = 0; to !=qmAt; to++){
                     std::string newPattern = pattern.substr(0, to) + '?';
                     realPatterns.push_back(newPattern);
             }}
