@@ -8,3 +8,6 @@ If the costructor finds pattern "w?v", where w v a re some strings, it is to add
 
 To cite an example: { "i", "in", "tin", "sting", "st?ng"} will lead to a new tuple of patterns.<br/>
 The new pattern is  { "i", "in", "tin", "sting", "st?ng", "st?", "t?", "?"}.
+
+The idea is that in such a case each "?" node has its own suffix link and might have output link if it's possible,
+so that we can simply use the same logic of aho-carasik algorism in order to search for the patterns on the text.
